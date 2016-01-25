@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.beardedhen.androidbootstrap.TypefaceProvider;
+
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -45,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        TypefaceProvider.registerDefaultIconSets();
         setContentView(R.layout.activity_main);
         scoreView = (TextView) findViewById(R.id.ScoreView);
         statusView = (TextView) findViewById(R.id.Status);
