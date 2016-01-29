@@ -1,9 +1,6 @@
 package xyz.techrelation.lookingforasantaclaus;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-
-import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -14,10 +11,11 @@ import android.widget.TextView;
 
 import com.beardedhen.androidbootstrap.TypefaceProvider;
 
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
-
 
 
 public class MainActivity extends AppCompatActivity {
@@ -31,10 +29,11 @@ public class MainActivity extends AppCompatActivity {
     private int no_target;
 
 
-    private boolean start = false;
+    private boolean hasStarted = false;
     private boolean first_click = false;
     private boolean click_bonus = false;
     private boolean isBonusStage = false;
+
 
     private TextView statusView;
     private TextView scoreView;
@@ -47,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         TypefaceProvider.registerDefaultIconSets();
         setContentView(R.layout.activity_main);
         scoreView = (TextView) findViewById(R.id.ScoreView);
@@ -200,32 +200,33 @@ public class MainActivity extends AppCompatActivity {
         MainTimerTask = new MainTimerTask();
         mainTimer.schedule(MainTimerTask, 3000, timerM);
         statusView.setText("Level1");
-        start = true;
+        hasStarted = true;
 
     }
 
     public void Reset(View view) {
-        mainTimer.cancel();
-        MainTimerTask.cancel();
-        score = 0;
-        scoreView.setText(String.valueOf(score));
-        statusView.setText("Resetしました。");
-        game_count = 0;
-        start = false;
+        if (hasStarted == true) {
+            mainTimer.cancel();
+            MainTimerTask.cancel();
+            score = 0;
+            scoreView.setText(String.valueOf(score));
+            statusView.setText("Resetしました。");
+            game_count = 0;
+            hasStarted = false;
 
-        for (int i = 0; i < 16; i++) {
-            imageViews[i] = (ImageView) findViewById(getResources()
-                    .getIdentifier("image" + i, "id", getPackageName()));
-            imageViews[i].setImageResource(R.drawable.question);
+            for (int i = 0; i < 16; i++) {
+                imageViews[i] = (ImageView) findViewById(getResources()
+                        .getIdentifier("image" + i, "id", getPackageName()));
+                imageViews[i].setImageResource(R.drawable.question);
 
+            }
         }
-
     }
 
     public void find(View view) {
         int click_number = Integer.parseInt((String) view.getTag());
         //レベル1でtarget_numberを押したとき
-        if (first_click == true && start == true && game_count < 11 && click_number == place_targetA) {
+        if (first_click == true && hasStarted == true && game_count < 11 && click_number == place_targetA) {
             score = score + 15;
             countlv1 = countlv1++;
             scoreView.setText(score + "Point");
@@ -234,7 +235,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //レベル1でtarget_number以外を押したとき
-        else if (start == true && game_count < 11 && click_number != place_targetA) {
+        else if (hasStarted == true && game_count < 11 && click_number != place_targetA) {
             score = score - 10;
             scoreView.setText(score + "Point");
             imageViews[click_number].setImageResource(R.drawable.minus10);
