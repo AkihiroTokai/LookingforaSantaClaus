@@ -10,12 +10,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.beardedhen.androidbootstrap.TypefaceProvider;
-
 import com.crashlytics.android.Crashlytics;
-import io.fabric.sdk.android.Fabric;
+
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import io.fabric.sdk.android.Fabric;
 
 
 public class MainActivity extends AppCompatActivity {
