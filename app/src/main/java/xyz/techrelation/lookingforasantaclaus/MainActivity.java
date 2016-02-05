@@ -409,13 +409,13 @@ public class MainActivity extends AppCompatActivity {
                     case 4:
                         score = score + 30;
                         scoreView.setText(score + "Point");
-                        imageViews[place_targetD].setImageResource(R.drawable.plus30);
+                        imageViewsD[place_target].setImageResource(R.drawable.plus30);
                         break;
                 }
             } else {
                 score = score + 40;
                 scoreView.setText(score + "Point");
-                imageViews[place_targetB].setImageResource(R.drawable.plus40);
+                imageViews[place_target].setImageResource(R.drawable.plus40);
             }
         }
 
