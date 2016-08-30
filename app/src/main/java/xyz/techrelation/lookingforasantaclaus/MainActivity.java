@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.beardedhen.androidbootstrap.TypefaceProvider;
 import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import java.util.Random;
 import java.util.Timer;
@@ -49,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics());
         TypefaceProvider.registerDefaultIconSets();
+        AdView mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
         setContentView(R.layout.activity_main);
         scoreView = (TextView) findViewById(R.id.ScoreView);
         statusView = (TextView) findViewById(R.id.Status);
@@ -259,7 +264,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //レベル3でbonus_numberを押さずtarget_numberを押したとき
-        else if (first_click == true && game_count > 21 && click_number == place_targetA && click_bonus == false) {
+        else if (first_click == true && game_count > 21 && click_number == place_targetA && !click_bonus) {
             score = score + 25;
             countlv3 = countlv3++;
             scoreView.setText(score + "Point");
@@ -273,7 +278,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //レベル3でbonus_numberを押したあとtarget_numberを押したとき
-        else if (game_count > 21 && click_number == place_targetA && click_bonus == true) {
+        else if (game_count > 21 && click_number == place_targetA && click_bonus) {
             score = score + 40;
             if (!isBonusStage) {
                 countlv3 = countlv3++;
@@ -291,7 +296,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //BonusStageでtarget_numberAを押したとき
-        else if (isBonusStage == true && click_number == place_targetA) {
+        else if (isBonusStage && click_number == place_targetA) {
             if (!click_bonus) {
                 switch (type_targetA) {
                     case 1:
@@ -423,7 +428,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //BonusStageでtarget以外を押したとき
-        else if (isBonusStage == true && (click_number != place_targetA || click_number != place_targetB || click_number != place_targetC)) {
+        else if (isBonusStage  && (click_number != place_targetA || click_number != place_targetB || click_number != place_targetC)) {
             switch (no_target) {
                 case 1:
                     score = score - 30;
