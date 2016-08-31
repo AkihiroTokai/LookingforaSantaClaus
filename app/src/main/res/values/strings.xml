@@ -4,4 +4,11 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="banner_ad_unit_id">ca-app-pub-8562277261640444/9399006219</string>
+    <string name="lv1_st">Level1</string>
+    <string name="lv2_st">Level2</string>
+    <string name="lv3_st">Level3</string>
+    <string name="bnstage_st">BonusStage</string>
+    <string name="finish_st">Finish!</string>
+    <string name="reset_st">Resetしました。</string>
+    <string name="unit_sc">Point</string>
 </resources>
